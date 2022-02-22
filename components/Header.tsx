@@ -5,10 +5,22 @@ const NavItem: React.FC<{ name: string; href: string; active: boolean }> = (
   props
 ) => {
   return (
-    <p className={(props.active ? "font-bold" : "hover:opacity-100 opacity-70 ") + " mr-8 text-sm"}>
+    <p className={(props.active ? "font-bold" : "hover:opacity-100 opacity-70 ") + " mr-4 lg:mr-8 text-xs md:text-sm"}>
       <Link href={props.href}>{props.name}</Link>
     </p>
   );
+};
+
+const MobileNavbar: React.FC<{}> = () => {
+  return (
+    <>
+      <div className="scale-75 block sm:hidden">
+        <div className="w-12 rounded-lg h-1.5 bg-white"/>
+        <div className="mt-1.5 w-12 rounded-lg h-1.5 bg-white"/>
+        <div className="mt-1.5 w-12 rounded-lg h-1.5 bg-white"/>
+      </div>
+    </>
+  )
 };
 
 const NavBar: React.FC<{ page: string }> = (props: { page: string }) => {
@@ -19,7 +31,7 @@ const NavBar: React.FC<{ page: string }> = (props: { page: string }) => {
     Support: "/support",
   };
   return (
-    <nav className="flex flex-grow">
+    <nav className="flex-grow hidden sm:flex">
       {Object.keys(pages).map((key: string) => (
         <NavItem
           key={key}
@@ -34,8 +46,8 @@ const NavBar: React.FC<{ page: string }> = (props: { page: string }) => {
 
 const Header: React.FC<{ page: string }> = (props) => {
   return (
-    <header className="flex items-center border-b-2 border-gold bg-dark w-full text-white p-6 pl-20 pr-20">
-      <div className="w-10 mr-20 pt-1">
+    <header className="flex items-center border-b-2 border-gold bg-dark w-full text-white p-6 p-resp">
+      <div onClick={() => window.location.href="/"} className="w-10 mr-8 md:mr-12 pt-1">
         <Image
           src="/images/logo.png"
           alt="logo"
@@ -44,8 +56,10 @@ const Header: React.FC<{ page: string }> = (props) => {
         />
       </div>
       <NavBar page={props.page} />
-      <button className="transition-all hover:scale-105 p-2 pl-6 pr-6 rounded-md text-sm border text-gold font-bold border-gold mr-2">Login</button>
-      <button className="transition-all hover:scale-105 p-2 pl-6 pr-6 rounded-md text-sm bg-gold font-bold">Join Free</button>
+      <div className="flex-grow block sm:hidden"></div>
+      <button className="hidden sm:block transition-all hover:scale-105 p-2 pl-6 pr-6 rounded-md text-xs md:text-sm border text-gold font-bold border-gold mr-2">Login</button>
+      <button className="hidden sm:block transition-all hover:scale-105 p-2 pl-6 pr-6 rounded-md text-xs md:text-sm bg-gold font-bold">Join Free</button>
+      <MobileNavbar />
     </header>
   );
 };

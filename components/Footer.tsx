@@ -14,7 +14,7 @@ const FooterNavSection: React.FC<{
   items: { name: string; href: string }[];
 }> = (props) => {
   return (
-    <div className="mr-16">
+    <div className="mr-10 sm:mr-16 mb-4">
       <h2 className="font-sm font-bold">{props.name}</h2>
       <div className="mt-3.5">
         {props.items.map((item) => (
@@ -60,7 +60,7 @@ const FooterNav: React.FC<{}> = () => {
     },
   ];
   return (
-    <nav className="flex ml-28">
+    <nav className="flex ml-12 md:ml-24 lg:ml-28 flex-wrap">
       {nav.map((section) => (
         <FooterNavSection
           key={section.name}
@@ -88,7 +88,7 @@ const FooterHeader: React.FC<{}> = () => {
 
 const Footer: React.FC<{}> = () => {
   return (
-    <footer className="flex border-t-2 border-gold pl-20 pr-20 p-8 text-white font-sans">
+    <footer className="flex border-t-2 border-gold p-resp p-8 text-white font-sans">
       <div>
         <FooterHeader />
         <p className="text-xs mt-10">© 2022 Vortex Gaming</p>
