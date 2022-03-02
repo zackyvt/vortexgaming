@@ -26,15 +26,6 @@ const SignUp: NextPage = () => {
               </span>
             </p>
           </header>
-          <label htmlFor="username" className="text-sm mb-1.5">
-            Username
-          </label>
-          <input
-            className="text-black rounded-md p-3 text-sm"
-            type="text"
-            name="username"
-            placeholder="Enter a username..."
-          />
           <label htmlFor="email" className="mt-6 text-sm mb-1.5">
             Email
           </label>
