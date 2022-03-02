@@ -3,6 +3,8 @@ import Page from "../components/Page";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../lib/firebase";
 
 const Hero: React.FC<{}> = () => {
   return (
@@ -20,7 +22,7 @@ const Hero: React.FC<{}> = () => {
           consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
           labore et dolore magna aliqua. Ut enim ad minim veniam.
         </p>
-        <button className="text-sm md:text-base text-gold transition-all hover:scale-105 mt-16 bg-dark p-4 pl-7 pr-7 border-2 border-gold font-bold rounded-md">
+        <button onClick={() => window.location.href="/join"} className="text-sm md:text-base text-gold transition-all hover:scale-105 mt-16 bg-dark p-4 pl-7 pr-7 border-2 border-gold font-bold rounded-md">
           Start your Journey
         </button>
       </header>
@@ -235,7 +237,7 @@ const ActionBanner: React.FC<{}> = () => {
           ipsum dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
       </header>
-      <button className="whitespace-nowrap self-start md:self-center mt-8 md:mt-0 text-gold transition-all hover:scale-105 bg-transparent p-4 pl-7 pr-7 border-2 border-gold font-bold rounded-md text-sm">
+      <button onClick={() => window.location.href="/join"} className="whitespace-nowrap self-start md:self-center mt-8 md:mt-0 text-gold transition-all hover:scale-105 bg-transparent p-4 pl-7 pr-7 border-2 border-gold font-bold rounded-md text-sm">
           Start your Journey
       </button>
     </div>
@@ -243,6 +245,13 @@ const ActionBanner: React.FC<{}> = () => {
 };
 
 const Home: NextPage = () => {
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = "/dashboard";
+      }
+    });
+  });
   return (
     <Page page="Home">
       <Hero />

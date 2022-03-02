@@ -13,6 +13,7 @@ const Page: React.FC<PageProps> = (props) => {
       <Head>
         <title>{props.page}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
       </Head>
       <div className="flex flex-col font-sans min-h-screen bg-dark">
         <Header page={props.page}/>
