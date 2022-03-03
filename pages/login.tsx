@@ -86,7 +86,7 @@ const Login: NextPage = () => {
           <p className="text-xs mt-3.5 opacity-70 hover:opacity-100 cursor-pointer transition-all">
             Forgot password?
           </p>
-          <button className="p-3 text-white bg-gold font-bold rounded-md mt-10 hover:scale-105 transition-all">
+          <button className={(email && password ? "opacity-100 hover:scale-105 cursor-pointer" : "opacity-50") + " p-3 text-white bg-gold font-bold rounded-md mt-10 transition-all"}>
             Sign In
           </button>
         </form>

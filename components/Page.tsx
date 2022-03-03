@@ -13,9 +13,9 @@ const Page: React.FC<PageProps> = (props) => {
       <Head>
         <title>{props.page}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
       </Head>
-      <div className="flex flex-col font-sans min-h-screen bg-dark">
+      <div className="overflow-hidden flex flex-col font-sans min-h-screen bg-dark relative">
         <Header page={props.page}/>
         <main className="flex-grow">{props.children}</main>
         <Footer/>

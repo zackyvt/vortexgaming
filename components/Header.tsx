@@ -15,13 +15,17 @@ const NavItem: React.FC<{ name: string; href: string; active: boolean }> = (
 };
 
 const MobileNavbar: React.FC<{}> = () => {
+  let [visible, setVisible] = useState(false);
   return (
     <>
-      <div className="scale-75 block sm:hidden">
+      <div className="scale-75 block sm:hidden" onClick={() => setVisible(prev => !prev)}>
         <div className="w-12 rounded-lg h-1.5 bg-white"/>
         <div className="mt-1.5 w-12 rounded-lg h-1.5 bg-white"/>
         <div className="mt-1.5 w-12 rounded-lg h-1.5 bg-white"/>
       </div>
+      { visible ? <div className="flex h-full flex-col p-resp items-start pt-6 z-20 absolute w-screen bg-dark inset-0">
+	<Image src="/icons/x.svg" width="50" height="50" alt="exit"/>
+      </div> : <div></div> }
     </>
   )
 };
@@ -48,13 +52,15 @@ const NavBar: React.FC<{ page: string }> = (props: { page: string }) => {
 };
 
 const Profile: React.FC<{}> = () => {
-  const [profile, setProfile] = useState(false);
+  const [profile, setProfile] = useState("");
+  const [pfp, setPfp] = useState("");
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setProfile(true);
+      	setPfp(user.photoURL ? user.photoURL : "/images/pfp.jpg");
+        setProfile(user.displayName ? user.displayName : user.email.split("@")[0]);
       } else {
-        setProfile(false);
+        setProfile("");
       }
     });
   });
@@ -66,7 +72,7 @@ const Profile: React.FC<{}> = () => {
       </div>
       <div className={(!profile ? "hidden" : "flex") + " items-center"}>
         <header className="text-right mr-4">
-          <h2 className="text-white font-sans text-sm font-bold uppercase">John Doe</h2>
+          <h2 className="text-white font-sans text-sm font-bold uppercase">{profile}</h2>
           <p onClick={() => getAuth().signOut()} className="text-xs font-light cursor-pointer hover:font-normal">Sign Out</p>
         </header>
         <Image alt="pfp" src="/images/pfp.jpg" width="35" height="35" className="rounded-full"/>
