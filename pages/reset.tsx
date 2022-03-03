@@ -23,7 +23,7 @@ const Reset: NextPage = () => {
     sendPasswordResetEmail(auth, email).then(() => {
     	toast.success("Password reset email sent!");
 	setCompleted(true);
-    }).catch((error) => {
+    }).catch((error: any) => {
       let message = "";
       switch(error.code) {
         case "auth/invalid-email":

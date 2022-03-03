@@ -19,13 +19,13 @@ const SignUp: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
-  const signUp = (e) => {
+  const signUp = (e: any) => {
     e.preventDefault();
     if(!(email && password && (password === cpassword))) return;
-	createUserWithEmailAndPassword(auth, email, password).then((credential) => {
+	createUserWithEmailAndPassword(auth, email, password).then((credential: any) => {
 		const user = credential.user;
 		console.log(user);
-	}).catch((e) => {
+	}).catch((e: any) => {
 		let msg = "";
 	    switch(e.code) {
 	    		case "auth/invalid-email":
