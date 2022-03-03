@@ -57,8 +57,8 @@ const Profile: React.FC<{}> = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-      	setPfp(user.photoURL ? user.photoURL : "/images/pfp.jpg");
-        setProfile(user.displayName ? user.displayName : user.email.split("@")[0]);
+      	setPfp(user.photoURL ? user.photoURL! : "/images/pfp.jpg");
+        setProfile(user.displayName ? user.displayName! : user.email.split("@")[0]);
       } else {
         setProfile("");
       }
