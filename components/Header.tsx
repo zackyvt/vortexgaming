@@ -4,17 +4,17 @@ import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../lib/firebase";
 
-const NavItem: React.FC<{ name: string; href: string; active: boolean }> = (
+const NavItem: React.FC<{ name: string; href: string; active: boolean, mobile: boolean }> = (
   props
 ) => {
   return (
-    <p className={(props.active ? "font-bold" : "hover:opacity-100 opacity-70 ") + " mr-4 lg:mr-8 text-xs md:text-sm"}>
+    <p className={(props.active ? "font-bold " : "hover:opacity-100 opacity-70 ") + (props.mobile ? "text-lg mt-3.5" : "mr-4 lg:mr-8 text-xs md:text-sm")}>
       <Link href={props.href}>{props.name}</Link>
     </p>
   );
 };
 
-const MobileNavbar: React.FC<{}> = () => {
+const MobileNavbar: React.FC<{children: JSX.Element[]}> = (props) => {
   let [visible, setVisible] = useState(false);
   return (
     <>
@@ -24,7 +24,8 @@ const MobileNavbar: React.FC<{}> = () => {
         <div className="mt-1.5 w-12 rounded-lg h-1.5 bg-white"/>
       </div>
       { visible ? <div className="flex h-full flex-col p-resp items-start pt-6 z-20 absolute w-screen bg-dark inset-0">
-	<Image src="/icons/x.svg" width="50" height="50" alt="exit"/>
+	<Image src="/icons/x.svg" width="50" height="50" alt="exit" onClick={() => setVisible(prev => !visible)}/>
+	<div className="ml-2 mt-8">{props.children}</div>
       </div> : <div></div> }
     </>
   )
@@ -38,6 +39,7 @@ const NavBar: React.FC<{ page: string }> = (props: { page: string }) => {
     Support: "/support",
   };
   return (
+  <>
     <nav className="flex-grow hidden sm:flex">
       {Object.keys(pages).map((key: string) => (
         <NavItem
@@ -45,13 +47,29 @@ const NavBar: React.FC<{ page: string }> = (props: { page: string }) => {
           name={key}
           href={pages[key]}
           active={props.page == key}
+	  mobile={false}
         />
       ))}
     </nav>
+      <div className="flex-grow block sm:hidden"></div>
+      <div className="hidden sm:block"><Profile mobile={false}/></div>
+      <MobileNavbar>
+      {Object.keys(pages).map((key: string) => (
+        <NavItem
+          key={key}
+          name={key}
+          href={pages[key]}
+          active={props.page == key}
+	  mobile={true}
+        />
+      ))}
+      <div className="mt-16"><Profile mobile={true}/></div>
+      </MobileNavbar>
+      </>
   );
 };
 
-const Profile: React.FC<{}> = () => {
+const Profile: React.FC<{mobile: boolean}> = (props) => {
   const [profile, setProfile] = useState("");
   const [pfp, setPfp] = useState("");
   useEffect(() => {
@@ -65,15 +83,16 @@ const Profile: React.FC<{}> = () => {
     });
   });
   return (
-    <div className="hidden sm:block">
-      <div className={profile ? "hidden" : "flex"}>
-        <button onClick={() => window.location.href="/login"} className="transition-all hover:scale-105 p-2 pl-6 pr-6 rounded-md text-xs md:text-sm border text-gold font-bold border-gold mr-2">Login</button>
-        <button onClick={() => window.location.href="/signup"} className="transition-all hover:scale-105 p-2 pl-6 pr-6 rounded-md text-xs md:text-sm bg-gold font-bold">Join Free</button>     
+    <div>
+      <div className={(profile ? "hidden" : "flex") + (props.mobile ? " flex-col text-md" : " flex-row text-xs md:text-sm")}>
+        <button onClick={() => window.location.href="/login"} className="transition-all hover:scale-105 p-2 pl-6 pr-6 rounded-md border text-gold font-bold border-gold">Login</button>
+	<div className={props.mobile ? "mb-4" : "mr-2"}/>
+        <button onClick={() => window.location.href="/signup"} className="transition-all hover:scale-105 p-2 pl-6 pr-6 rounded-md bg-gold font-bold">Join Free</button>     
       </div>
-      <div className={(!profile ? "hidden" : "flex") + " items-center"}>
-        <header className="text-right mr-4">
-          <h2 className="text-white font-sans text-sm font-bold uppercase">{profile}</h2>
-          <p onClick={() => getAuth().signOut()} className="text-xs font-light cursor-pointer hover:font-normal">Sign Out</p>
+      <div className={(!profile ? "hidden" : "flex") + " items-center " + (props.mobile ? "flex-row-reverse" : "flex-row")}>
+        <header className={props.mobile ? "text-left" : "mr-4 text-right"}>
+          <h2 className={"text-white font-sans font-bold uppercase " + (props.mobile ? "text-lg" : "text-sm")}>{profile}</h2>
+          <p onClick={() => getAuth().signOut()} className={"font-light cursor-pointer hover:font-normal " + (props.mobile ? "text-sm" : "text-xs")}>Sign Out</p>
         </header>
         <Image alt="pfp" src="/images/pfp.jpg" width="35" height="35" className="rounded-full"/>
       </div>
@@ -93,9 +112,6 @@ const Header: React.FC<{ page: string }> = (props) => {
         />
       </div>
       <NavBar page={props.page} />
-      <div className="flex-grow block sm:hidden"></div>
-      <Profile/>
-      <MobileNavbar />
     </header>
   );
 };
