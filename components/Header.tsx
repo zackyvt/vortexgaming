@@ -14,7 +14,7 @@ const NavItem: React.FC<{ name: string; href: string; active: boolean, mobile: b
   );
 };
 
-const MobileNavbar: React.FC<{children: JSX.Element[]}> = (props) => {
+const MobileNavbar: React.FC<{children: any}> = (props) => {
   let [visible, setVisible] = useState(false);
   return (
     <>
@@ -54,7 +54,7 @@ const NavBar: React.FC<{ page: string }> = (props: { page: string }) => {
       <div className="flex-grow block sm:hidden"></div>
       <div className="hidden sm:block"><Profile mobile={false}/></div>
       <MobileNavbar>
-      {Object.keys(pages).map((key: string) => (
+      {Object.keys(pages).map((key: string) => 
         <NavItem
           key={key}
           name={key}
@@ -62,7 +62,7 @@ const NavBar: React.FC<{ page: string }> = (props: { page: string }) => {
           active={props.page == key}
 	  mobile={true}
         />
-      ))}
+      )}
       <div className="mt-16"><Profile mobile={true}/></div>
       </MobileNavbar>
       </>
