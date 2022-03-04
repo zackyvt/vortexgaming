@@ -90,7 +90,7 @@ const Profile: React.FC<{mobile: boolean}> = (props) => {
         <button onClick={() => window.location.href="/signup"} className="transition-all hover:scale-105 p-2 pl-6 pr-6 rounded-md bg-gold font-bold">Join Free</button>     
       </div>
       <div className={(!profile ? "hidden" : "flex") + " items-center " + (props.mobile ? "flex-row-reverse" : "flex-row")}>
-        <header className={props.mobile ? "text-left" : "mr-4 text-right"}>
+        <header className={props.mobile ? "ml-4 text-left" : "mr-4 text-right"}>
           <h2 className={"text-white font-sans font-bold uppercase " + (props.mobile ? "text-lg" : "text-sm")}>{profile}</h2>
           <p onClick={() => getAuth().signOut()} className={"font-light cursor-pointer hover:font-normal " + (props.mobile ? "text-sm" : "text-xs")}>Sign Out</p>
         </header>
