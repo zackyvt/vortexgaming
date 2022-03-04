@@ -15,7 +15,7 @@ const Dashboard: NextPage = () => {
     });
   });
   return (
-    <Page page="Dashboard">
+    <Page page="Home">
 
     </Page>
   )
